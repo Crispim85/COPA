@@ -56,8 +56,16 @@ h2 {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 1rem;
   text-align: center;
+}
+
+.match-wrapper h2 {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
 }
 
 .bracket-container {
@@ -78,6 +86,12 @@ h2 {
 }
 
 .bracket-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.matches-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -275,4 +289,88 @@ h2 {
   background: #66b3ff;
   color: #000;
   box-shadow: 0 0 10px rgba(102, 179, 255, 0.5);
+}
+
+/* Export 9:16 Mode */
+.bracket-container.export-916 {
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 10rem 1rem 4rem 1rem !important; /* Top padding reserved for absolute title */
+  width: 1080px !important;
+  height: 1920px !important; /* FORCES HEIGHT TO 9:16 */
+  position: relative;
+  
+  /* Apply the same gradient and pattern as the body */
+  background: radial-gradient(circle at center, var(--bg-light) 0%, var(--bg-dark) 100%);
+  background-image: 
+    radial-gradient(circle at center, var(--bg-light) 0%, var(--bg-dark) 100%),
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E");
+  background-blend-mode: overlay;
+}
+
+/* Isolar o título no topo em uma única linha */
+.bracket-container.export-916 .center-stage h1 {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  font-size: 3.5rem;
+  margin: 0;
+}
+.bracket-container.export-916 .center-stage h1 br {
+  display: none;
+}
+
+/* Esconder texto para economizar espaço horizontal */
+.bracket-container.export-916 .team-name,
+.bracket-container.export-916 .team-code {
+  display: none;
+}
+
+/* Ajustar caixas e aumentar o tamanho das bandeiras */
+.bracket-container.export-916 .team-flag {
+  width: 56px;
+  height: 40px;
+}
+.bracket-container.export-916 .match-box {
+  width: auto;
+  min-width: 80px;
+}
+
+.bracket-container.export-916 .team-slot {
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.bracket-container.export-916 .bracket-half {
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.bracket-container.export-916 .center-stage {
+  flex: 0.6;
+  padding: 0;
+  justify-content: center;
+}
+
+.bracket-container.export-916 .center-stage .trophy-image {
+  width: 200px;
+  margin: 2rem 0;
+}
+
+.bracket-container.export-916 .final-match,
+.bracket-container.export-916 .third-place-match {
+  width: auto;
+  min-width: 90px;
+}
+
+.bracket-container.export-916 h2 {
+  font-size: 0.9rem;
+  margin-bottom: 2rem; /* Give headers a bit of breathing room from the matches */
+}
+
+.bracket-container.export-916 .action-buttons {
+  display: none;
 }

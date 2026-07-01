@@ -1,11 +1,12 @@
 import React from 'react';
 import TeamFlag from './TeamFlag';
 
-const MatchBox = ({ matchId, matchData, onAdvance }) => {
+const MatchBox = ({ matchId, matchData, onAdvance, title }) => {
   const { team1, team2, winner } = matchData;
 
   return (
     <div className="match-wrapper">
+      {title && <h2>{title}</h2>}
       <div className="match-box">
         <TeamFlag 
           team={team1} 

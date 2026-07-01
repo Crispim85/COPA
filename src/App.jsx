@@ -135,14 +135,58 @@ function App() {
     if (bracketRef.current) {
       try {
         const element = bracketRef.current;
+        
+        // Force the layout to stack vertically specifically for the export
+        element.classList.add('export-916');
+        
+        // Wait briefly for the browser to recalculate layout
+        await new Promise(resolve => setTimeout(resolve, 100));
+
         const canvas = await html2canvas(element, {
-          backgroundColor: '#001489',
+          backgroundColor: null,
           scale: 2,
           useCORS: true,
-          width: element.scrollWidth,
-          windowWidth: element.scrollWidth,
         });
-        const image = canvas.toDataURL("image/png");
+        
+        // Remove the vertical layout class to restore normal UI
+        element.classList.remove('export-916');
+        
+        let targetWidth = canvas.width;
+        let targetHeight = canvas.height;
+        const currentRatio = targetWidth / targetHeight;
+        const desiredRatio = 9 / 16;
+
+        if (currentRatio > desiredRatio) {
+          // É mais largo que 9:16, então aumentamos a altura
+          targetHeight = targetWidth / desiredRatio;
+        } else {
+          // É mais alto que 9:16, então aumentamos a largura
+          targetWidth = targetHeight * desiredRatio;
+        }
+
+        const finalCanvas = document.createElement('canvas');
+        finalCanvas.width = targetWidth;
+        finalCanvas.height = targetHeight;
+        const ctx = finalCanvas.getContext('2d');
+        
+        // Cria o mesmo degradê radial do site para o fundo do canvas final
+        const gradient = ctx.createRadialGradient(
+          targetWidth / 2, targetHeight / 2, 0,
+          targetWidth / 2, targetHeight / 2, Math.max(targetWidth, targetHeight)
+        );
+        gradient.addColorStop(0, '#002395'); // var(--bg-light)
+        gradient.addColorStop(1, '#000836'); // var(--bg-dark)
+        
+        // Preenche o fundo
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+        
+        // Desenha o canvas original centralizado
+        const xOffset = (targetWidth - canvas.width) / 2;
+        const yOffset = (targetHeight - canvas.height) / 2;
+        ctx.drawImage(canvas, xOffset, yOffset);
+
+        const image = finalCanvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.href = image;
         link.download = "chaveamento-copa.png";
@@ -150,6 +194,9 @@ function App() {
       } catch (error) {
         console.error("Erro ao gerar imagem", error);
         alert("Ocorreu um erro ao gerar a imagem.");
+        if (bracketRef.current) {
+          bracketRef.current.classList.remove('export-916');
+        }
       }
     }
   };

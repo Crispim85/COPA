@@ -4,7 +4,7 @@ import MatchBox from './MatchBox';
 const CenterStage = ({ matches, onAdvance, onReset, onShare }) => {
   return (
     <div className="center-stage">
-      <h1>Caminho<br/>Até a Final</h1>
+      <h1>Caminho <br/> Até a Final</h1>
       
       <div className="action-buttons" data-html2canvas-ignore="true">
         <button className="share-button" onClick={onShare} title="Compartilhar como Imagem">
