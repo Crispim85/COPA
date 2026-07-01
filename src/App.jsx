@@ -1,12 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import html2canvas from 'html2canvas';
 import BracketColumn from './components/BracketColumn';
 import CenterStage from './components/CenterStage';
 import { generateInitialMatches } from './data/bracketData';
 
 function App() {
-  const [matches, setMatches] = useState(generateInitialMatches());
+  const [matches, setMatches] = useState(() => {
+    const saved = localStorage.getItem('copaBracketState');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Error parsing saved bracket", e);
+      }
+    }
+    return generateInitialMatches();
+  });
+  
   const bracketRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem('copaBracketState', JSON.stringify(matches));
+  }, [matches]);
 
   const getNextMatch = (matchId) => {
     const parts = matchId.split('_');
@@ -113,6 +128,7 @@ function App() {
   const handleReset = () => {
     if (window.confirm("Tem certeza que deseja reiniciar todo o chaveamento?")) {
       setMatches(generateInitialMatches());
+      localStorage.removeItem('copaBracketState');
     }
   };
   const handleShare = async () => {
