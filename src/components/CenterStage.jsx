@@ -1,5 +1,6 @@
 import React from 'react';
 import MatchBox from './MatchBox';
+import tacaImage from '../assets/taca.png';
 
 const CenterStage = ({ matches, onAdvance, onReset, onShare }) => {
   return (
@@ -25,14 +26,9 @@ const CenterStage = ({ matches, onAdvance, onReset, onShare }) => {
       </div>
 
       <img 
-        src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png" 
-        alt="Trophy" 
+        src={tacaImage} 
+        alt="Taça Real" 
         className="trophy-image" 
-        crossOrigin="anonymous"
-        onError={(e) => {
-          // Fallback to a generic trophy image if the first fails
-          e.target.src = "https://cdn-icons-png.flaticon.com/512/3112/3112946.png";
-        }}
       />
 
       <div className="third-place-label">3º LUGAR</div>
